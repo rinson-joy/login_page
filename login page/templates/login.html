@@ -49,6 +49,10 @@
             body: JSON.stringify({ username: userInput, password: pwInput, role: roleInput })
          });
          const result = await response.json();
+         if (response.ok) {
+            window.location.href = '/contents';
+            return;
+         }
          document.getElementById('message').textContent = result.message || '';
          document.getElementById('user').textContent = result.username ? ` ${result.username}` : '';
          document.getElementById('role').textContent = result.role ? ` ${result.role}` : '';
