@@ -1,4 +1,3 @@
-import getpass as gp
 import flask as fl
 import pymongo as pm
 
