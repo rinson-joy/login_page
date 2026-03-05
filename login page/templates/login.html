@@ -56,6 +56,9 @@
          document.getElementById('message').textContent = result.message || '';
          document.getElementById('user').textContent = result.username ? ` ${result.username}` : '';
          document.getElementById('role').textContent = result.role ? ` ${result.role}` : '';
+         if (document.getElementById('role') == ' student')
+         window.location.href = '/attendance';
+         return;
       });
    </script>
 </body>
