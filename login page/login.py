@@ -73,5 +73,9 @@ def contents():
 def attendance():
     return fl.render_template("attendance.html", name="Attendance")
 
+@app.route('/fees')
+def fees():
+    return fl.render_template("fees.html", name="Fees")
+
 if __name__ == "__main__":
     app.run(debug=True)
