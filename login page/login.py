@@ -64,6 +64,14 @@ def delete_user():
         return fl.jsonify({"message": "User deleted successfully"}), 200
     else:
         return fl.jsonify({"message": "No matching account found"}), 404
+    
+@app.route('/contents')
+def contents():
+    return fl.render_template("contents.html", name="Contents")
+
+@app.route('/attendance')
+def attendance():
+    return fl.render_template("attendance.html", name="Attendance")
 
 if __name__ == "__main__":
     app.run(debug=True)
