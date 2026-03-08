@@ -1,3 +1,5 @@
+Theory
+
 - REST? Verbs/Methods
 - HTTP Request/Response
     - Componenets of request/response
