@@ -54,8 +54,15 @@
             notes.forEach(note => {
                 html += `
                     <div class="note-item">
-                        <p>${note.content}</p>
-                        <button class="delete-note-btn" onclick="deleteNote('${note._id}')">Delete</button>
+                        <div class="note-content">
+                            <p id="note-text-${note._id}" ondblclick="startInlineEdit('${note._id}')">${note.content}</p>
+                            <textarea id="note-edit-${note._id}" class="note-edit" rows="3"></textarea>
+                        </div>
+                        <div class="note-actions">
+                            <button class="edit-note-btn save-btn" onclick="saveInlineEdit('${note._id}')">Save</button>
+                            <button class="delete-note-btn cancel-btn" onclick="cancelInlineEdit('${note._id}')">Cancel</button>
+                            <button class="delete-note-btn" onclick="deleteNote('${note._id}')">Delete</button>
+                        </div>
                     </div>
                 `;
             });
@@ -113,6 +120,59 @@
                 }
             } catch (error) {
                 console.error('Error deleting note:', error);
+            }
+        }
+
+        function toggleInlineButtons(noteId, editing) {
+            const root = document.getElementById(`note-text-${noteId}`)?.closest('.note-item');
+            if (!root) return;
+            root.querySelector('.save-btn').style.display = editing ? 'inline-block' : 'none';
+            root.querySelector('.cancel-btn').style.display = editing ? 'inline-block' : 'none';
+        }
+
+        function startInlineEdit(noteId) {
+            const textEl = document.getElementById(`note-text-${noteId}`);
+            const editEl = document.getElementById(`note-edit-${noteId}`);
+            if (!textEl || !editEl) return;
+            editEl.value = textEl.textContent;
+            textEl.style.display = 'none';
+            editEl.style.display = 'block';
+            editEl.focus();
+            editEl.setSelectionRange(editEl.value.length, editEl.value.length);
+            toggleInlineButtons(noteId, true);
+        }
+
+        function cancelInlineEdit(noteId) {
+            const textEl = document.getElementById(`note-text-${noteId}`);
+            const editEl = document.getElementById(`note-edit-${noteId}`);
+            if (!textEl || !editEl) return;
+            editEl.value = '';
+            editEl.style.display = 'none';
+            textEl.style.display = 'block';
+            toggleInlineButtons(noteId, false);
+        }
+
+        async function saveInlineEdit(noteId) {
+            const editEl = document.getElementById(`note-edit-${noteId}`);
+            const updated = editEl ? editEl.value : '';
+            if (!updated.trim()) {
+                alert('Note cannot be empty');
+                return;
+            }
+            try {
+                const response = await fetch(`/api/notes/${noteId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: updated })
+                });
+                if (response.ok) {
+                    fetchNotes();
+                } else {
+                    const result = await response.json();
+                    alert(result.message || 'Failed to update note');
+                }
+            } catch (error) {
+                console.error('Error updating note:', error);
             }
         }
 

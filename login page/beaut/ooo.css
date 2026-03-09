@@ -224,20 +224,54 @@ select {
     border: 1px solid #e2e6ea;
 }
 
+.note-content {
+    flex: 1;
+    margin-right: 15px;
+}
+
 .note-item p {
     margin-right: 15px;
     color: #333;
     word-break: break-word;
+    cursor: pointer;
 }
 
+.note-edit {
+    display: none;
+    width: 100%;
+    margin: 0;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-note-btn,
 .delete-note-btn {
     width: auto;
     margin-top: 0;
     padding: 5px 10px;
     font-size: 12px;
+}
+
+.edit-note-btn {
+    background: #28a745;
+}
+
+.edit-note-btn:hover {
+    background: #218838;
+}
+
+.delete-note-btn {
     background: #dc3545;
 }
 
 .delete-note-btn:hover {
     background: #c82333;
+}
+
+.save-btn,
+.cancel-btn {
+    display: none;
 }
