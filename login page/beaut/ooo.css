@@ -1,10 +1,10 @@
 /* Monkeytype Palette */
 :root {
-    --bg-color: #323437;
+    --bg-color: #ffffff;
     --main-color: #e2b714;
-    --sub-color: #646669;
-    --text-color: #d1d0c5;
-    --error-color: #ca4754;
+    --sub-color: #000000;
+    --text-color: #000000;
+    --error-color: #ff0019;
 }
 
 * {
@@ -62,6 +62,7 @@ body {
 }
 
 /* Reverted Container Logic */
+
 .container {
     padding: 10% 2rem;
     text-align: center;
@@ -71,4 +72,30 @@ h1 {
     font-size: 2.5rem;
     font-weight: 300;
     letter-spacing: -1px;
+}
+
+
+body{
+    font-family: Arial;
+    text-align: center;
+    transition: 0.4s;
+}
+
+.dark{
+   --bg-color: #333333;
+    --main-color: #e2b714;
+    --sub-color: #ffffff;
+    --text-color: #ebebeb;
+    --error-color: #ff0019;
+
+}
+
+button{
+    display: block;
+    padding: 10px 160px;
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    margin-left: 0;
 }
