@@ -12,6 +12,13 @@
             document.documentElement.classList.add('dark');
         }
     </script>
+    <style>
+        /* Prevent flash while external CSS loads */
+        html.dark body {
+            background: #323437;
+            color: #d1d0c5;
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='ooo.css') }}">
     {% block extra_head %}{% endblock %}
