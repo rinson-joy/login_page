@@ -36,3 +36,4 @@ Frontend
 - Get rid of the whitespace in username/password
     - same goes for the role selection menu in admin panel
 - Keep the role selection menu in the centre
+-need to align the notes containers 
