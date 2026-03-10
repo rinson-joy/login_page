@@ -45,12 +45,12 @@
             const themeKey = 'theme';
 
             function applyTheme(theme) {
-                document.body.classList.toggle('dark', theme === 'dark');
-                document.body.classList.toggle('light', theme !== 'dark');
+                document.documentElement.classList.toggle('dark', theme === 'dark');
             }
 
             function changeMode() {
-                const nextTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+                const isDark = document.documentElement.classList.contains('dark');
+                const nextTheme = isDark ? 'light' : 'dark';
                 applyTheme(nextTheme);
                 localStorage.setItem(themeKey, nextTheme);
             }
