@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='ooo.css') }}">
     {% block extra_head %}{% endblock %}
 </head>
+
 <body>
     <nav class="top-nav">
         <div class="logo">
             <span class="icon">⌂</span> home
         </div>
+
+        
+
         <div class="nav-links">
             <a href="/home">home</a>
             <a href="/register">register</a>
@@ -26,7 +31,17 @@
             <a href="/delete" class="danger">delete</a>
         </div>
     </nav>
+    <div class="theme-toggle">
+        <button onclick="changeMode()">Change Mode</button>
+
+        <script>
+            function changeMode() {
+                document.body.classList.toggle("dark");
+            }
+        </script>
+    </div>
 
     {% block content %}{% endblock %}
 </body>
+
 </html>
