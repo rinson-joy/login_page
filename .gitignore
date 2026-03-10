@@ -1,4 +1,1 @@
-/.hintrc
-/demo
-/designtest
-/login
+*.pyc
