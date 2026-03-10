@@ -1,26 +1,39 @@
-/* Monkeytype Palette */
+/* Monkeytype Palette - Light Theme (Default) */
 :root {
     --bg-color: #ffffff;
     --main-color: #e2b714;
-    --sub-color: #000000;
-    --text-color: #000000;
-    --error-color: #ff0019;
+    --sub-color: #646669;
+    --text-color: #202124;
+    --error-color: #ca4754;
 }
 
+/* Dark Theme */
+.dark {
+    --bg-color: #323437;
+    --main-color: #e2b714;
+    --sub-color: #646669;
+    --text-color: #d1d0c5;
+    --error-color: #ca4754;
+}
+
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Body */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Roboto Mono', monospace;
     line-height: 1.6;
+    text-align: center;
+    transition: background 0.4s, color 0.4s;
 }
 
-/* Navbar Styling */
+/* Navbar */
 .top-nav {
     display: flex;
     justify-content: space-between;
@@ -28,6 +41,7 @@ body {
     padding: 2rem 10%;
 }
 
+/* Logo */
 .logo {
     font-size: 1.2rem;
     font-weight: 500;
@@ -41,6 +55,7 @@ body {
     font-size: 1.5em;
 }
 
+/* Navigation Links */
 .nav-links a {
     text-decoration: none;
     color: var(--sub-color);
@@ -61,41 +76,31 @@ body {
     color: var(--error-color);
 }
 
-/* Reverted Container Logic */
-
+/* Container */
 .container {
     padding: 10% 2rem;
     text-align: center;
 }
 
+/* Heading */
 h1 {
     font-size: 2.5rem;
     font-weight: 300;
     letter-spacing: -1px;
 }
 
-
-body{
-    font-family: Arial;
-    text-align: center;
-    transition: 0.4s;
-}
-
-.dark{
-   --bg-color: #333333;
-    --main-color: #e2b714;
-    --sub-color: #ffffff;
-    --text-color: #ebebeb;
-    --error-color: #ff0019;
-
-}
-
-button{
-    display: block;
-    padding: 10px 160px;
+/* Theme Button */
+button {
+    padding: 10px 40px;
     background-color: transparent;
     color: var(--text-color);
-    border: none;
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
     cursor: pointer;
-    margin-left: 0;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--main-color);
+    color: #000;
 }
