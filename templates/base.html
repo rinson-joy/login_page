@@ -23,21 +23,27 @@
             <span class="icon">⌂</span> home
         </div>
 
-        
-
         <div class="nav-links">
             <a href="/home">home</a>
+            {% if not session.user %}
             <a href="/register">register</a>
-            <a href="/login">login</a>
-            {% if session.role == 'master' %}
-            <a href="/admin" class="accent">admin panel</a>
             {% endif %}
             {% if session.user %}
             <a href="/logout">logout</a>
+            {% else %}
+            <a href="/login">login</a>
+            {% endif %}
+            {% if session.role == 'master' %}
+                {% if request.path == '/admin' %}
+                <a href="/notes" class="accent">notes</a>
+                {% else %}
+                <a href="/admin" class="accent">admin panel</a>
+                {% endif %}
             {% endif %}
             <a href="/delete" class="danger">delete</a>
         </div>
     </nav>
+
     <div class="theme-toggle">
         <button onclick="changeMode()">Change Mode</button>
 
@@ -66,3 +72,4 @@
 </body>
 
 </html>
+
