@@ -18,9 +18,10 @@ Backend
     - Create
     - Edit
     - List All
-    - Delete -->
+    - Delete
 - Split backend
-    - Different files for different responsibilities
+    - Different files for different responsibilities -->
+- Collapse all html and css files into react.
 
 Frontend
 
