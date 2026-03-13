@@ -61,6 +61,11 @@ body {
 }
 
 /* Navigation Links */
+.nav-links {
+    display: inline-flex;
+    align-items: center;
+}
+
 .nav-links a {
     text-decoration: none;
     color: var(--sub-color);
@@ -108,6 +113,116 @@ button {
 button:hover {
     background-color: var(--main-color);
     color: #000;
+}
+
+/* Form Inputs */
+input,
+textarea,
+select {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--sub-color);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-color);
+    transition: background-color 9999s ease-out 0s;
+    box-shadow: 0 0 0px 1000px transparent inset;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--sub-color);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--main-color);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    cursor: pointer;
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1.5rem;
+}
+
+.theme-toggle:hover .theme-icon * {
+    stroke: var(--main-color);
+}
+
+
+.theme-toggle-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 0;
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+    transform: translateY(-1px);
+}
+
+.theme-icon * {
+    fill: none;
+    stroke: var(--main-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+}
+
+#moon-icon * {
+    stroke: var(--sub-color);
+}
+
+#moon-icon:hover * {
+    stroke: var(--main-color);
+}
+
+#sun-icon:hover * {
+    stroke: var(--text-color);
+}
+
+#moon-icon {
+    display: none;
+}
+
+#sun-icon {
+    display: block;
+}
+
+html.dark #moon-icon {
+    display: block;
+}
+
+html.dark #sun-icon {
+    display: none;
+}
+
+/* Flash Prevention */
+html.dark body {
+    background-color: #323437;
+    color: #d1d0c5;
 }
 
 /* Responsive */

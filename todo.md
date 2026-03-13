@@ -26,8 +26,8 @@ Backend
     - similar to notes but it saves the keystrokes
     - 'view/play' diary shows the diary entry in the same way it was typed.
     - create a database to save the keystrokes with the characters.
-- E-mail login
-    - sharing notes using mail, through the app.
+<!-- - E-mail login
+    - sharing notes using mail, through the app. -->
 
 Frontend
 
@@ -39,5 +39,5 @@ Frontend
 - Keep the role selection menu in the centre.
     - need to align the notes containers.
 - E-mail login.
-    - sharing notes using mail interface.
-    - should be shared as a notification, user can accept or reject it.
+    <!-- - sharing notes using mail interface.
+    - should be shared as a notification, user can accept or reject it. -->

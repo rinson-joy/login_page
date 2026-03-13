@@ -27,8 +27,8 @@
     <script>
         document.getElementById('deleteForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const userInput = document.getElementById('userInput').value;
-            const pwInput = document.getElementById('pwInput').value;
+            const userInput = document.getElementById('userInput').value.trim();
+            const pwInput = document.getElementById('pwInput').value.trim();
             const roleInput = document.getElementById('roleInput').value.trim();
             const responseDiv = document.getElementById('response');
             const messageSpan = document.getElementById('message');

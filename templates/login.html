@@ -29,9 +29,9 @@
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const userInput = document.getElementById('userInput').value;
-            const emailInput = document.getElementById('emailInput').value;
-            const pwInput = document.getElementById('pwInput').value;
+            const userInput = document.getElementById('userInput').value.trim();
+            const emailInput = document.getElementById('emailInput').value.trim();
+            const pwInput = document.getElementById('pwInput').value.trim();
             const responseDiv = document.getElementById('response');
             const messageSpan = document.getElementById('message');
 
