@@ -44,10 +44,10 @@
                 messageSpan.textContent = result.message;
                 if (response.ok) {
                     responseDiv.className = 'response-container success';
-                    // Redirect to login after 2 seconds
+                    // Redirect to login after 1 second
                     setTimeout(() => {
                         window.location.href = '/login';
-                    }, 2000);
+                    }, 1000);
                 } else {
                     responseDiv.className = 'response-container error';
                 }

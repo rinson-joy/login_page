@@ -47,8 +47,10 @@
 
                 if (response.ok) {
                     responseDiv.className = 'response-container success';
-                    // Redirect everyone to /home
-                    window.location.href = '/home';
+                    // Redirect everyone to /home after 1 second
+                    setTimeout(() => {
+                        window.location.href = '/home';
+                    }, 1000);
                     return;
                 } else {
                     responseDiv.className = 'response-container error';

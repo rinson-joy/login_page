@@ -16,6 +16,42 @@
     --error-color: #ca4754;
 }
 
+/* Matrix Theme */
+.matrix {
+    --bg-color: #000000;
+    --main-color: #15ff00;
+    --sub-color: #006500;
+    --text-color: #d1ffcd;
+    --error-color: #ca4754;
+}
+
+/* Phantom Theme */
+.phantom {
+    --bg-color: #001;
+    --main-color: #7aa2f7;
+    --sub-color: #414868;
+    --text-color: #c0caf5;
+    --error-color: #ca4754;
+}
+
+/* Red Dragon Theme */
+.red-dragon {
+    --bg-color: #1a0b0c;
+    --main-color: #ff3a32;
+    --sub-color: #4a4d4e;
+    --text-color: #e2a528;
+    --error-color: #ca4754;
+}
+
+/* Anti Hero Theme */
+.anti-hero {
+    --bg-color: #00002e;
+    --main-color: #ff3d8b;
+    --sub-color: #ffadad;
+    --text-color: #f1deef;
+    --error-color: #ca4754;
+}
+
 /* Reset */
 * {
     margin: 0;
@@ -72,6 +108,8 @@ body {
     display: inline-flex;
     align-items: baseline;
     gap: 0.75rem;
+    position: relative;
+    padding-left: 2.25rem;
 }
 
 .logo a {
@@ -161,10 +199,12 @@ button:hover {
 .cancel-btn:hover,
 .reject-btn:hover {
     color: var(--error-color);
+    border-color: var(--error-color);
 }
 
 .accept-btn:hover {
     color: #4caf50;
+    border-color: #4caf50;
 }
 
 .edit-btn:hover,
@@ -299,6 +339,20 @@ button:hover {
     text-decoration: none;
 }
 
+#requestModal .cancel-delete-btn:hover {
+    color: var(--text-color);
+}
+
+#requestModal .accept-btn,
+#requestModal .reject-btn {
+    border: none;
+    padding: 0;
+}
+
+#requestModal .share-actions {
+    margin-top: 0.5rem;
+}
+
 .delete-btn:hover {
     color: var(--error-color);
 }
@@ -313,6 +367,113 @@ select {
     border-radius: 6px;
     padding: 0.6rem 0.8rem;
     font-family: 'Roboto Mono', monospace;
+}
+
+.settings-select-wrap {
+    position: relative;
+    min-width: 140px;
+}
+
+.settings-select-btn {
+    width: 100%;
+    text-align: left;
+    border: 1px solid var(--sub-color);
+    border-radius: 8px;
+    padding: 2px 8px;
+    background: #2f3136;
+    color: var(--sub-color);
+    font-family: 'Roboto Mono', monospace;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.settings-select-btn:hover,
+.settings-select-btn:focus {
+    border-color: var(--sub-color);
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.04);
+    outline: none;
+}
+
+.settings-select-menu {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 6px;
+    min-width: 100%;
+    z-index: 20;
+}
+
+.settings-select-menu.share-menu {
+    display: none;
+}
+
+.settings-select-menu.share-menu.open {
+    display: grid;
+}
+
+.settings-select-menu .matrix-option:hover {
+    color: #15ff00;
+    background: rgba(0, 0, 0, 0.6);
+    text-shadow: none;
+}
+
+.settings-select-menu .phantom-option:hover {
+    color: #7aa2f7;
+    background: rgba(0, 0, 17, 0.6);
+    text-shadow: 0 0 14px rgba(122, 162, 247, 0.9);
+}
+
+.settings-select-menu .red-dragon-option:hover {
+    color: #ff3a32;
+    background: rgba(26, 11, 12, 0.6);
+    text-shadow: none;
+}
+
+.settings-select-menu .anti-hero-option:hover {
+    color: #ff3d8b;
+    background: rgba(0, 0, 46, 0.6);
+    text-shadow: none;
+}
+
+html.phantom .settings-select-menu .share-option {
+    text-shadow: none;
+}
+
+.settings-select-menu .dark-option:hover {
+    color: #d1d0c5;
+    background: rgba(255, 255, 255, 0.04);
+    text-shadow: none;
+}
+
+html.phantom .settings-select-menu .matrix-option:hover {
+    color: #15ff00;
+    background: rgba(0, 0, 0, 0.6);
+    text-shadow: none;
+}
+
+html.phantom .settings-select-menu .dark-option:hover {
+    color: #d1d0c5;
+    background: rgba(255, 255, 255, 0.04);
+    text-shadow: none;
+}
+
+html.phantom .settings-select-menu .phantom-option:hover {
+    color: #7aa2f7;
+    background: rgba(0, 0, 17, 0.6);
+    text-shadow: 0 0 14px rgba(122, 162, 247, 0.9);
+}
+
+html.phantom .settings-select-menu .red-dragon-option:hover {
+    color: #ff3a32;
+    background: rgba(26, 11, 12, 0.6);
+    text-shadow: none;
+}
+
+html.phantom .settings-select-menu .anti-hero-option:hover {
+    color: #ff3d8b;
+    background: rgba(0, 0, 46, 0.6);
+    text-shadow: none;
 }
 
 input:-webkit-autofill,
@@ -344,16 +505,15 @@ select:focus {
 /* Theme Toggle */
 .theme-toggle {
     cursor: pointer;
-    color: var(--text-color);
     display: inline-flex;
     align-items: center;
     margin-left: 1.5rem;
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 70;
+    gap: 1rem;
 }
-
-.theme-toggle:hover .theme-icon * {
-    stroke: var(--main-color);
-}
-
 
 .theme-toggle-inner {
     display: inline-flex;
@@ -361,6 +521,68 @@ select:focus {
     gap: 0.5rem;
     line-height: 0;
 }
+
+.settings-badge {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    color: var(--sub-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.settings-badge svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.settings-badge:hover {
+    color: var(--text-color);
+}
+
+.settings-page {
+    text-align: left;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.settings-panel {
+    margin-top: 1.5rem;
+    border: 1px solid var(--sub-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: grid;
+    gap: 1.5rem;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.settings-group h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--main-color);
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.settings-note {
+    margin-top: 1rem;
+    color: var(--sub-color);
+    font-size: 0.85rem;
+}
+
 
 .theme-icon {
     width: 20px;
@@ -407,10 +629,96 @@ html.dark #sun-icon {
     display: none;
 }
 
+html.phantom #moon-icon {
+    display: block;
+}
+
+html.phantom #sun-icon {
+    display: none;
+}
+
+html.red-dragon #moon-icon {
+    display: block;
+}
+
+html.red-dragon #sun-icon {
+    display: none;
+}
+
+html.anti-hero #moon-icon {
+    display: block;
+}
+
+html.anti-hero #sun-icon {
+    display: none;
+}
+
+html.matrix #moon-icon {
+    display: block;
+}
+
+html.matrix #sun-icon {
+    display: none;
+}
+
 /* Flash Prevention */
 html.dark body {
     background-color: #323437;
     color: #d1d0c5;
+}
+
+html.matrix body {
+    background-color: #000000;
+    color: #d1ffcd;
+}
+
+html.phantom body {
+    background-color: #001;
+    color: #c0caf5;
+    text-shadow: 0 0 14px rgba(122, 162, 247, 0.7);
+}
+
+html.red-dragon body {
+    background-color: #1a0b0c;
+    color: #e2a528;
+}
+
+html.anti-hero body {
+    background-color: #00002e;
+    color: #f1deef;
+}
+
+html.phantom h1,
+html.phantom h2,
+html.phantom h3,
+html.phantom .note-item,
+html.phantom .note-title-input,
+html.phantom .note-content,
+html.phantom .share-preview,
+html.phantom .notes-panel,
+html.phantom .notes-sidebar,
+html.phantom .settings-select-menu .share-option {
+    text-shadow: 0 0 18px rgba(122, 162, 247, 1);
+    color: #c0caf5;
+}
+
+html.phantom .nav-links a:hover,
+html.phantom .logo:hover {
+    text-shadow: 0 0 16px rgba(122, 162, 247, 0.95);
+}
+
+html.phantom svg {
+    filter: none;
+}
+
+html.phantom .icon-btn:hover,
+html.phantom .settings-select-btn:hover {
+    text-shadow: 0 0 14px rgba(122, 162, 247, 0.8);
+}
+
+html.phantom .icon-btn:hover svg,
+html.phantom .settings-select-btn:hover svg {
+    filter: drop-shadow(0 0 10px rgba(122, 162, 247, 0.8));
 }
 
 /* Responsive */
@@ -603,6 +911,10 @@ html.dark body {
     line-height: 1;
     display: inline-flex;
     align-items: baseline;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .menu-btn svg {
@@ -610,7 +922,7 @@ html.dark body {
     height: 1.5em;
     display: inline-block;
     vertical-align: baseline;
-    transform: translateY(3.5px);
+    transform: translateY(5px);
 }
 
 .menu-btn:hover {

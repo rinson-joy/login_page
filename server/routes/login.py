@@ -112,3 +112,8 @@ def delete_user():
 
     return fl.jsonify({"message": "User not found"}), 404
 
+@login_bp.route('/settings')
+@login_required
+def settings():
+    return fl.render_template("settings.html", name="Settings")
+

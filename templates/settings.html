@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <div class="container settings-page">
+        <h1>settings</h1>
+
+        <div class="settings-panel">
+            <div class="settings-group">
+                <h2>general.</h2>
+                <div class="settings-row">
+                    <label for="themeSelectBtn">themes</label>
+                    <div class="settings-select-wrap">
+                        <button id="themeSelectBtn" class="settings-select-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+                            default
+                        </button>
+                        <div class="share-menu settings-select-menu" id="themeSelectMenu" role="listbox" aria-hidden="true">
+                            <button class="share-option" type="button" data-value="default">default</button>
+                            <button class="share-option dark-option" type="button" data-value="dark">dark</button>
+                            <button class="share-option matrix-option" type="button" data-value="matrix">matrix</button>
+                            <button class="share-option phantom-option" type="button" data-value="phantom">phantom</button>
+                            <button class="share-option red-dragon-option" type="button" data-value="red-dragon">red dragon</button>
+                            <button class="share-option anti-hero-option" type="button" data-value="anti-hero">anti hero</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-row">
+                    <label for="settingAutosave">autosave notes</label>
+                    <input id="settingAutosave" type="checkbox" />
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h2>privacy.</h2>
+                <div class="settings-row">
+                    <label for="settingShare">allow incoming shares</label>
+                    <input id="settingShare" type="checkbox" checked />
+                </div>
+                <div class="settings-row">
+                    <label for="settingEmail">email notifications</label>
+                    <input id="settingEmail" type="checkbox" />
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h2>account.</h2>
+                <div class="settings-row">
+                    <label for="settingDisplayName">display name</label>
+                    <input id="settingDisplayName" type="text" placeholder="your name" />
+                </div>
+                <div class="settings-row">
+                    <label for="timezoneSelectBtn">timezone</label>
+                    <div class="settings-select-wrap">
+                        <button id="timezoneSelectBtn" class="settings-select-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+                            use device time
+                        </button>
+                        <div class="share-menu settings-select-menu" id="timezoneSelectMenu" role="listbox" aria-hidden="true">
+                            <button class="share-option" type="button" data-value="local">use device time</button>
+                            <button class="share-option" type="button" data-value="utc">utc</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="settings-note">these settings are placeholders for now.</p>
+    </div>
+
+    <script>
+        const themeSelectBtn = document.getElementById('themeSelectBtn');
+        const themeSelectMenu = document.getElementById('themeSelectMenu');
+        const timezoneSelectBtn = document.getElementById('timezoneSelectBtn');
+        const timezoneSelectMenu = document.getElementById('timezoneSelectMenu');
+
+        function toggleMenu(button, menu) {
+            if (!button || !menu) return;
+            const isOpen = menu.classList.toggle('open');
+            menu.setAttribute('aria-hidden', String(!isOpen));
+            button.setAttribute('aria-expanded', String(isOpen));
+        }
+
+        function closeMenu(button, menu) {
+            if (!button || !menu) return;
+            menu.classList.remove('open');
+            menu.setAttribute('aria-hidden', 'true');
+            button.setAttribute('aria-expanded', 'false');
+        }
+
+        if (themeSelectBtn && themeSelectMenu) {
+            themeSelectBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleMenu(themeSelectBtn, themeSelectMenu);
+                closeMenu(timezoneSelectBtn, timezoneSelectMenu);
+            });
+        }
+
+        if (timezoneSelectBtn && timezoneSelectMenu) {
+            timezoneSelectBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleMenu(timezoneSelectBtn, timezoneSelectMenu);
+                closeMenu(themeSelectBtn, themeSelectMenu);
+            });
+        }
+
+        if (themeSelectMenu) {
+            themeSelectMenu.querySelectorAll('.share-option').forEach((option) => {
+                option.addEventListener('click', () => {
+                    const value = option.getAttribute('data-value');
+                    if (value) {
+                        themeSelectBtn.textContent = option.textContent.trim();
+                        setTheme(value);
+                    }
+                    closeMenu(themeSelectBtn, themeSelectMenu);
+                });
+            });
+        }
+
+        if (timezoneSelectMenu) {
+            timezoneSelectMenu.querySelectorAll('.share-option').forEach((option) => {
+                option.addEventListener('click', () => {
+                    timezoneSelectBtn.textContent = option.textContent.trim();
+                    closeMenu(timezoneSelectBtn, timezoneSelectMenu);
+                });
+            });
+        }
+
+        document.addEventListener('click', () => {
+            closeMenu(themeSelectBtn, themeSelectMenu);
+            closeMenu(timezoneSelectBtn, timezoneSelectMenu);
+        });
+    </script>
+{% endblock %}
