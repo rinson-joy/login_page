@@ -23,4 +23,6 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(share_bp)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=80)
+    context = ('/etc/letsencrypt/live/dulynoted.wbskt.com/fullchain.pem', 
+               '/etc/letsencrypt/live/dulynoted.wbskt.com/privkey.pem')
+    app.run(host='0.0.0.0', port=5000, ssl_context=context)
