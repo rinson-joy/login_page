@@ -23,11 +23,11 @@
                         <div class="settings-select-wrap">
                             <button type="button" class="settings-select-btn" id="formatBtn" onclick="toggleFormatMenu(event)">format</button>
                             <div class="settings-select-menu share-menu" id="formatMenu">
-                                <button type="button" class="share-option" onmousedown="event.preventDefault()" data-cmd="formatBlock" data-val="P" onclick="formatDoc('formatBlock', 'P'); closeFormatMenu()">paragraph</button>
-                                <button type="button" class="share-option" onmousedown="event.preventDefault()" data-cmd="formatBlock" data-val="H1" onclick="formatDoc('formatBlock', 'H1'); closeFormatMenu()">heading 1</button>
-                                <button type="button" class="share-option" onmousedown="event.preventDefault()" data-cmd="formatBlock" data-val="H2" onclick="formatDoc('formatBlock', 'H2'); closeFormatMenu()">heading 2</button>
-                                <button type="button" class="share-option" onmousedown="event.preventDefault()" data-cmd="formatBlock" data-val="H3" onclick="formatDoc('formatBlock', 'H3'); closeFormatMenu()">heading 3</button>
-                                <button type="button" class="share-option" onmousedown="event.preventDefault()" data-cmd="formatBlock" data-val="BLOCKQUOTE" onclick="formatDoc('formatBlock', 'BLOCKQUOTE'); closeFormatMenu()">quote</button>
+                                <button type="button" class="share-option" onmousedown="event.preventDefault()" onclick="selectFormat('formatBlock', 'P', 'paragraph')">paragraph</button>
+                                <button type="button" class="share-option" onmousedown="event.preventDefault()" onclick="selectFormat('formatBlock', 'H1', 'heading 1')">heading 1</button>
+                                <button type="button" class="share-option" onmousedown="event.preventDefault()" onclick="selectFormat('formatBlock', 'H2', 'heading 2')">heading 2</button>
+                                <button type="button" class="share-option" onmousedown="event.preventDefault()" onclick="selectFormat('formatBlock', 'H3', 'heading 3')">heading 3</button>
+                                <button type="button" class="share-option" onmousedown="event.preventDefault()" onclick="selectFormat('formatBlock', 'BLOCKQUOTE', 'quote')">quote</button>
                             </div>
                         </div>
                         <div class="rich-toolbar-divider"></div>
@@ -183,6 +183,11 @@
         function closeFormatMenu() {
             const menu = document.getElementById('formatMenu');
             if (menu) menu.classList.remove('open');
+        }
+        function selectFormat(cmd, val, label) {
+            formatDoc(cmd, val);
+            document.getElementById('formatBtn').childNodes[0].textContent = label;
+            closeFormatMenu();
         }
 
         function updateToolbarStates() {
@@ -872,6 +877,11 @@
                 wrap.classList.add('is-hidden');
             });
         });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.settings-select-wrap')) {
+                closeFormatMenu();
+    }
+});
     loadUserSettings().then(() => {
         applyUISettings();
         initPage();
