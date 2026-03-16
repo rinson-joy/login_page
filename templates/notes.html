@@ -135,10 +135,10 @@
 
             if (userSettings.show_line_numbers) {
                 noteInput.classList.add('show-line-numbers');
-                updateLineNumbers();
             } else {
                 noteInput.classList.remove('show-line-numbers');
             }
+            updateLineNumbers();
         }
 
         function updateLineNumbers() {
@@ -150,23 +150,25 @@
             textarea.style.height = 'auto';
             const h = textarea.scrollHeight;
             textarea.style.height = h + 'px';
-            // Synchronize gutter height
-            lineNumbers.style.height = h + 'px'; 
 
+            // Only update line numbers if they are enabled
+            if (userSettings.show_line_numbers) {
+                // Synchronize gutter height
+                lineNumbers.style.height = h + 'px'; 
 
-
-            const text = textarea.value;
-            const lines = text.split('\n').length;
-            
-            let html = '';
-            for (let i = 1; i <= lines; i++) {
-                html += `<div>${i}</div>`;
+                const text = textarea.value;
+                const lines = text.split('\n').length;
+                
+                let html = '';
+                for (let i = 1; i <= lines; i++) {
+                    html += `<div>${i}</div>`;
+                }
+                lineNumbers.innerHTML = html;
             }
-            lineNumbers.innerHTML = html;
         }
 
         document.getElementById('noteContent').addEventListener('input', () => {
-            if (userSettings.show_line_numbers) updateLineNumbers();
+            updateLineNumbers();
         });
 
         async function fetchNotes() {
@@ -261,7 +263,7 @@
             input.value = item.dataset.content || '';
             if (titleInput) titleInput.value = item.dataset.title || '';
             input.focus();
-            if (userSettings.show_line_numbers) updateLineNumbers();
+            updateLineNumbers();
             addBtn.textContent = 'save';
             if (form) form.classList.add('is-editing');
 
@@ -284,7 +286,7 @@
             input.value = '';
             if (titleInput) titleInput.value = '';
             addBtn.textContent = 'add note';
-            if (userSettings.show_line_numbers) updateLineNumbers();
+            updateLineNumbers();
             if (form) form.classList.remove('is-editing');
         }
 

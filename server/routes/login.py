@@ -25,20 +25,17 @@ def add_user():
     if col.find_one({"username": username}):
         return fl.jsonify({"message": "username already exists"}), 400 
     
-    # Users receive placeholder role 'user', the admin will be setting their actual roles later on.
-
-    role = "user"
     
     col.insert_one({
         "username": username,
         "password": password,
-        "role": role,
         "email": email,
         "allow_incoming_shares": True,
         "allow_share_notifications": True,
+        "show_line_numbers": True,
     })
     return fl.jsonify({
-        "message": f"registered successfully as {role}"
+        "message": f"registered successfully as {username}"
     }), 201
 
 
@@ -56,23 +53,24 @@ def login():
     data = fl.request.get_json(silent=True) or fl.request.form
     username = data.get("username")
     password = data.get("password")
-    email = data.get("email")
     
     if not username or not password:
         return fl.jsonify({"message": "Missing fields"}), 400
         
     user = col.find_one({"username": username, "password": password})
-    if user["password"] == password and user["username"] == username:
-        if user:
-            fl.session.clear()
-            fl.session["user"] = user["username"]
-            # Stores the role from DB into session.
-            fl.session["role"] = user.get("role", "user")
-            return fl.jsonify({
-                "message": "Login successful",
-                "username": user["username"],
-                "role": fl.session["role"]
-            }), 200
+    if user and user["password"] == password and user["username"] == username:
+        fl.session.clear()
+        fl.session["user"] = user["username"]
+        # Only "master" role is relevant now.
+        role = user.get("role")
+        if role == "master":
+            fl.session["role"] = "master"
+        
+        return fl.jsonify({
+            "message": "Login successful",
+            "username": user["username"],
+            "role": fl.session.get("role")
+        }), 200
         
     return fl.jsonify({"message": "Invalid credentials"}), 401
 
@@ -91,7 +89,6 @@ def delete_user():
     data = fl.request.get_json(silent=True) or fl.request.form
     username = data.get("username")
     password = data.get("password")
-    role = data.get("role")
 
     if not username or not password:
         return fl.jsonify({"message": "Missing username or password"}), 400
@@ -101,9 +98,6 @@ def delete_user():
         return fl.jsonify({"message": "Not allowed to delete this user"}), 403
 
     query = {"username": username, "password": password}
-    if role:
-        query["role"] = role
-
     user = col.find_one(query)
     if not user:
         return fl.jsonify({"message": "Invalid credentials"}), 401
@@ -173,6 +167,8 @@ def user_settings():
         updates["default_note_title"] = data.get("default_note_title", "untitled").strip()
     if "sort_order" in data:
         updates["sort_order"] = data.get("sort_order", "modified")
+    if "theme" in data:
+        updates["theme"] = data.get("theme", "light")
     
     if updates:
         col.update_one(
@@ -184,7 +180,7 @@ def user_settings():
         user = col.find_one(
             {"username": fl.session.get("user")},
             {"_id": 0, "username": 1, "email": 1, "allow_incoming_shares": 1, "allow_share_notifications": 1,
-             "editor_font_size": 1, "show_line_numbers": 1, "default_note_title": 1, "sort_order": 1},
+             "editor_font_size": 1, "show_line_numbers": 1, "default_note_title": 1, "sort_order": 1, "theme": 1},
         )
         return fl.jsonify({
             "username": user.get("username", ""),
@@ -192,9 +188,10 @@ def user_settings():
             "allow_incoming_shares": user.get("allow_incoming_shares", True),
             "allow_share_notifications": user.get("allow_share_notifications", True),
             "editor_font_size": user.get("editor_font_size", "medium"),
-            "show_line_numbers": user.get("show_line_numbers", False),
+            "show_line_numbers": user.get("show_line_numbers", True),
             "default_note_title": user.get("default_note_title", "untitled"),
             "sort_order": user.get("sort_order", "modified"),
+            "theme": user.get("theme", "light"),
         }), 200
 
     updates["message"] = "Settings updated"

@@ -11,9 +11,7 @@ Backend
 - Retain user login info.
     - i.e. when we re-open the page, prevously logged in user must be still logged in.
 - Registration will not have roles.
-    - All registration will be a standard user initially
-    - Only admin will be able to assign roles to a user.
-    - This means there will always be an admin account.
+    - Only existing master admin accounts remain; no new ones can be added.
 - User - Notes
     - Create
     - Edit
@@ -35,8 +33,7 @@ Frontend
     - can create multiple themes along those lines(5 light themes, 5 dark themes).
     - user can create custom themes alongside set themes.
 - Get rid of the whitespace in username/password.
-    - same goes for the role selection menu in admin panel.
-- Keep the role selection menu in the centre.
+- Keep the interface centered.
     - need to align the notes containers.
 - E-mail login.
     <!-- - sharing notes using mail interface.

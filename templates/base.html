@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DulyNoted.</title>
-    <link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23e2b714%22 stroke-width=%223%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z%22></path></svg>">
+    <link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%22-2 1 28 28%22 fill=%22none%22 stroke=%22%23e2b714%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z%22></path></svg>">
     <script>
         function updateFavicon(theme) {
             const colors = {
@@ -23,7 +23,7 @@
             const color = colors[theme] || '#e2b714';
             const favicon = document.getElementById('favicon');
             if (favicon) {
-                favicon.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22${encodeURIComponent(color)}%22 stroke-width=%223%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z%22></path></svg>`;
+                favicon.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%22-2 1 28 28%22 fill=%22none%22 stroke=%22${encodeURIComponent(color)}%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z%22></path></svg>`;
             }
         }
 
@@ -79,7 +79,7 @@
             </button>
             {% endif %}
             <a href="/home" class="icon" aria-label="home">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
             </a>
@@ -223,6 +223,15 @@
                 }
                 applyTheme(theme);
                 localStorage.setItem(themeKey, theme);
+                
+                // Sync with backend if logged in
+                if (typeof userSettings !== 'undefined' || window.location.pathname === '/settings' || document.querySelector('.nav-links').textContent.includes('logout')) {
+                    fetch('/api/settings', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ theme: theme })
+                    }).catch(err => console.error('Failed to sync theme:', err));
+                }
             }
 
             document.addEventListener('DOMContentLoaded', () => {

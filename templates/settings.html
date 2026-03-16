@@ -431,5 +431,33 @@
         });
 
         loadSettings();
+
+        // Handle clicking outside the settings panel to return back
+        document.addEventListener('click', (event) => {
+            // Only execute if we are on the settings page
+            if (window.location.pathname !== '/settings') return;
+
+            const panel = document.querySelector('.settings-panel');
+            const h1 = document.querySelector('h1');
+            const nav = document.querySelector('.top-nav');
+            const modals = document.querySelectorAll('.delete-modal, .share-modal');
+            
+            // Do not go back if clicking inside the panel, the title, or the nav
+            if (panel && panel.contains(event.target)) return;
+            if (h1 && h1.contains(event.target)) return;
+            if (nav && nav.contains(event.target)) return;
+            
+            // Do not go back if a modal is open and we are clicking inside it
+            let insideModal = false;
+            modals.forEach(modal => {
+                if (modal.classList.contains('open') && modal.contains(event.target)) {
+                    insideModal = true;
+                }
+            });
+            if (insideModal) return;
+
+            // Otherwise, if we clicked "outside", go back
+            window.history.back();
+        });
     </script>
 {% endblock %}
