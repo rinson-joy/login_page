@@ -249,7 +249,19 @@
             });
         </script>
 
-    <script>
+    <script>    
+        let userSettings = {};
+        async function loadUserSettings() {
+            try {
+                const response = await fetch('/api/settings');
+                if (response.ok) {
+                    userSettings = await response.json();
+                }
+            } catch (e) {
+                console.error('Failed to load settings:', e);
+            }
+        }
+        
         const notificationBtn = document.getElementById('notificationBtn');
         const notificationMenu = document.getElementById('notificationMenu');
         const notificationIndicator = document.getElementById('notificationIndicator');

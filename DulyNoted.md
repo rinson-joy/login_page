@@ -1,59 +1,74 @@
-# DulyNoted
-
-DulyNoted is a web-based note-taking application designed for secure and organized personal documentation. It supports user authentication, note management (CRUD), sharing, and data portability through import/export features.
+# DulyNoted.md
 
 ## Project Overview
 
-- **Purpose:** A lightweight, secure note-taking platform.
-- **Backend:** [Flask](https://flask.palletsprojects.com/) (Python) using Blueprints for modular routing.
-- **Database:** [MongoDB](https://www.mongodb.com/) via `pymongo`, with collections for `userdata`, `notes`, and `shared`.
-- **Frontend:** HTML templates using [Jinja2](https://jinja.palletsprojects.com/) and custom CSS located in the `beaut/` directory.
-- **Architecture:** 
-    - `server/`: Core logic, including routes (`server/routes/`), database models/utilities (`server/monkey.py`), and the entry point (`server/main.py`).
-    - `templates/`: Jinja2 templates for the web interface.
-    - `beaut/`: Static assets (CSS, images).
+**DulyNoted** is a secure, web-based note-taking application built with Python and Flask. It provides a lightweight platform for users to create, manage, share, and export their notes. The project follows a modular architecture using Flask Blueprints and utilizes MongoDB for data persistence.
+
+### Main Technologies
+- **Backend:** [Flask](https://flask.palletsprojects.com/) (Python 3.x)
+- **Database:** [MongoDB](https://www.mongodb.com/) via `pymongo`
+- **Frontend:** [Jinja2](https://jinja.palletsprojects.com/) templates and custom CSS
+- **Authentication:** Custom session-based authentication with role-based access control (RBAC).
+
+### Architecture
+- `server/`: Contains the core application logic.
+    - `main.py`: Entry point for the application. Handles configuration and Blueprint registration.
+    - `monkey.py`: Database connection setup and common decorators (`@login_required`, `@admin_required`).
+    - `routes/`: Modular route definitions.
+        - `login.py`: User authentication (login, registration, logout).
+        - `notes.py`: Core note CRUD operations, including import/export logic.
+        - `share.py`: Note sharing functionality.
+        - `admin.py`: Administrative routes (requires "master" role).
+- `templates/`: Jinja2 HTML templates for all pages.
+- `beaut/`: Static directory containing CSS (`ooo.css`) and other UI assets.
+
+---
 
 ## Building and Running
 
 ### Prerequisites
 - Python 3.x
-- MongoDB instance (local or Atlas)
-- Required Python packages: `flask`, `pymongo`
+- MongoDB instance (Local or Atlas)
+- Required Python packages: `flask`, `pymongo`, `bson`
 
 ### Environment Variables
-The application requires two key environment variables to function correctly:
-- `apple`: Controls the execution mode. 
-    - Set to `'apple keeps doc away'` to run in **Debug Mode** (local development).
-    - Any other value will trigger **Production Mode** (runs on `0.0.0.0:5000` with SSL context).
-- `banana`: The MongoDB connection string (e.g., `mongodb+srv://...`).
+The application relies on two critical environment variables:
+- `apple`: Execution mode.
+    - Set to `'apple keeps doc away'` for **Development Mode** (enables debug).
+    - Any other value triggers **Production Mode** (binds to `0.0.0.0:5000` with SSL context).
+- `banana`: MongoDB connection string (e.g., `mongodb+srv://user:pass@cluster.mongodb.net/`).
 
-### Running the Application
+### Running Locally (PowerShell)
 ```powershell
-# Development mode
 $env:apple = 'apple keeps doc away'
 $env:banana = 'your_mongodb_connection_string'
 python server/main.py
 ```
 
 ### Deployment
-A `deploy.sh` script is provided for server-side updates, which pulls the latest code from `main` and restarts the `dulynoted` systemd service.
+A `deploy.sh` script is available for production updates. It pulls from the `main` branch and restarts the `dulynoted` systemd service.
+
+---
 
 ## Development Conventions
 
-- **Modular Routing:** All routes are organized into Blueprints under `server/routes/`.
-- **Authentication:** Use the `@login_required` decorator from `server/monkey.py` to protect routes.
-- **Admin Access:** Use the `@admin_required` decorator for administrative functions (requires existing `role: "master"` in the database). No new master accounts can be created through the application.
-- **Styling:** CSS is centralized in `beaut/ooo.css`.
-- **API Responses:** Prefer `fl.jsonify` for consistent API responses.
+### Routing & Logic
+- **Modular Routes:** All new functionality should be implemented as a Flask Blueprint in `server/routes/`.
+- **API Responses:** Use `flask.jsonify` for all JSON API endpoints to ensure consistent response formatting.
+- **Database Access:** Use the pre-configured collections (`userdata`, `notes_col`, `share_col`) from `server/monkey.py`.
 
-## Roadmap & Known Issues
-- [ ] **React Migration:** Plans to move the frontend to React (as noted in `todo.md`).
-- [ ] **Diary Feature:** Implementation of a "keystroke-replaying" diary.
-- [ ] **Email Sharing:** Enhancing the sharing feature with email notifications.
-- [ ] **UI Bug:** When line numbers are toggled off in the notes area, text overflow may disable scrolling in the hit area.
+### Security & Access Control
+- **Route Protection:** Use the `@login_required` decorator from `monkey.py` for any route requiring an authenticated user.
+- **Admin Features:** Use the `@admin_required` decorator for routes reserved for the "master" role. Note that "master" accounts cannot be created via the UI.
+- **Data Integrity:** Always validate that the current user owns the resource (e.g., a note) before performing `UPDATE` or `DELETE` operations.
 
-## Key Files
-- `server/main.py`: Entry point and application configuration.
-- `server/monkey.py`: Database connection and authentication decorators.
-- `server/routes/notes.py`: Core note management logic.
-- `todo.md`: Tracks ongoing tasks and feature requests.
+### Styling & UI
+- **CSS:** All styles are centralized in `beaut/ooo.css`. Avoid inline styles.
+- **Templates:** Use the Jinja2 template inheritance pattern (extending `base.html`) for consistency across pages.
+
+---
+
+## Roadmap & Notes
+- **Future Migration:** A migration to React for the frontend is planned.
+- **Data Portability:** Supports exporting notes in JSON and TXT formats and importing from the same.
+- **Keystroke Diary:** A planned feature for recording and replaying note creation "keystrokes."

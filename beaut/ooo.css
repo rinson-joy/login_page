@@ -1111,27 +1111,169 @@ html.phantom .settings-select-btn:hover svg {
 }
 
 .note-input-actions {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+.note-input:not(.show-line-numbers) .line-numbers-wrap {
+    grid-template-columns: 1fr;
+    overflow-y: hidden; /* hand off scroll to editor */
+}
+
+.note-input:not(.show-line-numbers) .note-input-editor {
+    grid-column: 1;
+    overflow-y: auto;  /* editor now handles its own scroll */
+    height: 100%;      /* fill the full wrap height */
+}
+
+.note-input:not(.show-line-numbers) .note-input-editor {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.note-input:not(.show-line-numbers) .note-input-editor::-webkit-scrollbar {
+    display: none;
 }
 
 .note-input-buttons {
-    display: inline-flex;
+    background: transparent;
+    padding: 8px 16px;
+    flex-shrink: 0;
+}
+
+#messageInline {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Rich Text Toolbar */
+.rich-toolbar {
+    /* flex-shrink: 0;
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
-    justify-self: start;
+    gap: 4px;*/
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-top: 15px;
+    padding: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
-.note-input-spacer {
-    justify-self: end;
+.rich-toolbar .settings-select-wrap {
+    min-width: 100px;
 }
 
-.inline-message {
-    font-size: 0.85rem;
+.toolbar-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
     color: var(--sub-color);
-    justify-self: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    border-radius: 4px;
+}
+
+.toolbar-btn:hover,
+.toolbar-btn.active {
+    color: var(--text-color);
+    background: transparent;
+}
+
+.toolbar-btn.active {
+    color: var(--main-color);
+}
+
+.toolbar-btn svg {
+    display: block;
+    stroke-width: 1.5;
+}
+
+#formatBtn {
+    width: auto;
+    min-width: 100px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#formatBtn.active {
+    color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+#formatBtn::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--sub-color);
+    margin-left: 8px;
+}
+
+#formatMenu {
+    min-width: 140px;
+    right: 0;
+    left: auto;
+}
+
+.rich-toolbar-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--sub-color);
+    opacity: 0.2;
+    margin: 0 4px;
+}
+
+/* Link Modal Styles */
+.link-modal-panel {
+    width: min(320px, 92vw);
+}
+
+.link-modal-panel input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.note-input-editor {
+    grid-column: 2;
+    width: 100%;
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem;
+    font-family: 'Roboto Mono', monospace;
+    min-height: 100%;
+    box-sizing: border-box;
+    line-height: 1.6;
+    display: block;
+    outline: none;
+    margin: 0;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: hidden;
+    word-wrap: normal;
+    overflow-wrap: normal;
+    text-align: left;
+}
+
+.note-input-editor:empty:before {
+    content: attr(placeholder);
+    color: var(--sub-color);
+    cursor: text;
 }
 
 .inline-message.success {
@@ -1795,7 +1937,10 @@ html.phantom .settings-select-btn:hover svg {
 
 .line-numbers {
     grid-column: 1;
-    padding: 0.8rem 0.5rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     text-align: right;
     color: var(--sub-color);
     font-size: inherit;
@@ -1813,6 +1958,7 @@ html.phantom .settings-select-btn:hover svg {
 
 .line-numbers div {
     line-height: 1.6;
+    height: 1.6;
     margin: 0;
     padding: 0;
 }
@@ -1843,16 +1989,7 @@ html.phantom .settings-select-btn:hover svg {
     word-wrap: normal !important;
     overflow-wrap: normal !important;
 }
-.note-snippet {
-    font-size: 0.85rem;
-    color: var(--sub-color);
-    margin-top: 0.5rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+
 .grid-item {
     padding: 1.5rem;
     min-height: 160px;
